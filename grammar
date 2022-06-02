@@ -1,0 +1,44 @@
+
+C         -> "," | "/n"
+List<T>   -> [C* T] [C+ T] C*
+
+Program   -> List<Item>
+Item      -> "const" Ident ":" [Ident] "=" Expr
+          -> "fn" Ident "(" List<Ident ":" Ident> ")" ["->" [Ident]] Block
+
+Block     -> C* "{" List<Statement> "}"
+Statement -> Ident ":" [Ident] "=" Expr
+          -> Ident [AssignOp] "=" Expr
+          -> "if" Expr Block C* ["else" "if" Expr Block C*] ["else" Block]
+          -> "loop" Block
+          -> "return" ["(" RetTarget [C IntLiteral] ")"] Expr
+          -> Call
+
+Expr      -> C* Value [Binop C* Value]
+Value     -> Unop Value
+          -> "(" Value ")"
+          -> Ident
+          -> Call
+          -> Literal
+
+Call      -> Ident "(" List<Expr> ")"
+
+Binop     -> "+" | "-" | "*" | "/" | "%" | "&" | "|" | "==" | "!=" | ">=" | "<=" | ">" | "<"
+Unop      -> "!" | "-"
+AssignOp  -> "+" | "-" | "*" | "/" | "%" | "&" | "|"
+
+RetTarget -> "loop" | "if" | "fn"
+
+Ident     -> '[a-zA-Z_][a-zA-Z0-9_]*'
+Literal   -> "true" | "false"
+          -> [IntPrefix] '[0-9a-fA-F_]+' [IntSuffix]
+          -> '\d+' [FltSuffix]
+          -> '\d+' "." '\d*' [FltSuffix]
+          -> '\d*' "." '\d+' [FltSuffix]
+          -> '\d+' "e" ["-"] '\d+'
+
+IntPrefix -> "0b" | "0q" | "0o" | "0x" | "0d"
+IntSuffix -> "i" | "i8" | "i16" | "i32" | "i64"
+          -> "u" | "u8" | "u16" | "u32" | "u64"
+FltSuffix -> "f" | "f32" | "f64"
+

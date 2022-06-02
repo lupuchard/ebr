@@ -1,0 +1,16 @@
+[package]
+
+name = "thang"
+version = "0.0.1"
+authors = ["luke"]
+build = "build.rs"
+
+#[dependencies.llvm_sys]
+#path = "src/llvm_sys"
+
+[dependencies]
+bitflags = "*"
+getopts  = "0.2"
+
+[build-dependencies]
+semver = "*"

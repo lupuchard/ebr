@@ -1,0 +1,14 @@
+
+const STEMS := 4
+
+fn main() -> I32 {
+	x := (4 + 3)
+	x = -x
+	return x
+}
+
+/* aoler  */
+// eoaeuaoeuaoesuhlraoecuh
+/* const main := () -> I32 {
+
+} */
